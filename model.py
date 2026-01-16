@@ -1,5 +1,5 @@
 ##Making the custom GPT model from scratch using transformers and pytorch
-from transformers import GPT2LMHeadModel, GPT2Tokenizer
+from transformers import GPT2LMHeadModel, GPT2Tokenizer   ##Importing the weights of the model from the HUB.
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -32,7 +32,7 @@ class LayerNorm(nn.Module):
 
 
 class CasualSelfAttention(nn.Module):
-    def __init__(self, config):
+    def __init__(self, config):  
         super().__init__()
         self.config = config
         ##This is the inner projections that we have
@@ -44,8 +44,8 @@ class CasualSelfAttention(nn.Module):
         self.attn_dropout = nn.Dropout(config.dropout)
         self.dropout = config.dropout
         self.residual_dropout = nn.Dropout(config.dropout)
-        self.flash = hasattr(torch.nn.functional,'scaled_dot_product_attention')
-        #if not self.flash:
+        self.flash = hasattr(torch.nn.functional,'scaled_dot_product_attention') ##Use flassh attention which is optimized in CUDA kernels for faster scaled dot product attention and matrix multiplication.
+        #if not self.flash:   ##fallback if the flash attention is not available
             #self.register_buffer('bias', torch.tril(torch.ones(config.block_size, config.block_size).view(1,1,config.block_size, config.block_size)))
     def forward(self, x):
         B,T,C = x.size()
@@ -65,7 +65,7 @@ class CasualSelfAttention(nn.Module):
         y = self.residual_dropout(self.c_proj(y))
         return y
     
-class MLP(nn.Module):
+class MLP(nn.Module):  #MLP for the compute 
     def __init__(self, config):
         super().__init__()
         self.c_fc = nn.Linear(config.n_embd, 4*config.n_embd, bias = config.bias)
