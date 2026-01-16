@@ -6,17 +6,15 @@ from model import GPT, GPTConfig
 # --------------------------
 # Setup
 # --------------------------
-device = "cuda" if torch.cuda.is_available() else "cpu"
+device = "cuda" if torch.cuda.is_available() else "cpu" #Using NVIDIA (RTX 4090) for the compute. 
 print(f"Using device: {device}")
 
-# Initialize tokenizer
+# Initialize tokenizer from th ertiktoken library
 enc = tiktoken.get_encoding("gpt2")
 
 # Load model
 config = GPTConfig(vocab_size=50304)
 model = GPT(config).to(device)
-
-# Load weights (ignore compile wrapper prefixes like _orig_mod)
 state_dict = torch.load("model.pt", map_location=device)
 if any(k.startswith("_orig_mod.") for k in state_dict.keys()):
     new_state_dict = {k.replace("_orig_mod.", ""): v for k, v in state_dict.items()}
