@@ -58,10 +58,8 @@ grad_accum = total_batch_size // (B*T)
 
 train_loader = DataLoaderLite(B=B, T=T)
 
-# typo fixed: "precison" → "precision"
 torch.set_float32_matmul_precision('high')
 
-# You must INSTANTIATE GPTConfig()
 model = GPT(GPTConfig(vocab_size=50304)).to(device)
 model = torch.compile(model, backend="aot_eager", mode="reduce-overhead")
 
