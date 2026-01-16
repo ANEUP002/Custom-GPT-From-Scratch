@@ -25,7 +25,7 @@ else:
     model.load_state_dict(state_dict, strict=False)
 
 model.eval()
-print("✅ Model loaded successfully!")
+print("Model loaded successfully!")
 
 # --------------------------
 # Generation Function
@@ -74,7 +74,7 @@ def generate(
 # --------------------------
 # Run Generation
 # --------------------------
-prompt = input("\n🎭 Enter your Shakespeare-style prompt:\n> ")
+prompt = input("Enter your Shakespeare-style prompt:\n> ")
 output = generate(
     model,
     start_text=prompt,
@@ -85,6 +85,6 @@ output = generate(
     repetition_penalty=1.2,
 )
 
-print("\n--- 📝 Generated Text ---\n")
+print("\n--- Generated Text ---\n")
 print(output)
 print("\n--------------------------\n")
