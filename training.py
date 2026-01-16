@@ -113,6 +113,6 @@ for step in range(max_steps):
 
     # Save model after training
 torch.save(model.state_dict(), "model.pt")
-print("✅ Model saved to model.pt")
+print("Model saved to model.pt")
 
  
